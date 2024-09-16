@@ -8,15 +8,15 @@ files:
 hooks:
   BeforeInstall:
     - location: scripts/install_dependencies.sh
-      timeout: 300
+      timeout: 30
       runas: ubuntu
 
   ApplicationStart:
     - location: scripts/start_react_server.sh
-      timeout: 300
+      timeout: 30
       runas: ubuntu
 
   ValidateService:
     - location: scripts/validate_service.sh
-      timeout: 300
+      timeout: 30
       runas: ubuntu
