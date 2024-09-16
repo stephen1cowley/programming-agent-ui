@@ -32,7 +32,7 @@ function App() {
 
   const handleUpload = async () => {
     if (!selectedFile) {
-      alert('Please select a file first!!');
+      alert('Please select a file first!!!');
       return;
     }
 
