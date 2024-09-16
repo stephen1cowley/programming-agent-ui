@@ -6,10 +6,10 @@ files:
     overwrite: yes
 
 hooks:
-  BeforeInstall:
-    - location: scripts/install_dependencies.sh
-      timeout: 30
-      runas: ubuntu
+  # BeforeInstall:
+  #   - location: scripts/install_dependencies.sh
+  #     timeout: 30
+  #     runas: ubuntu
 
   ApplicationStart:
     - location: scripts/start_react_server.sh
