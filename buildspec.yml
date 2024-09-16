@@ -1,0 +1,30 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14 # Define your language and runtime here
+    commands:
+      - echo Installing dependencies...
+      - npm install  # Example of installing dependencies for a Node.js app
+  pre_build:
+    commands:
+      - echo Not running linting...
+  build:
+    commands:
+      - echo Build started on `date`
+      - npm run build  # Example build step
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Uploading artifacts...
+
+artifacts:
+  files:
+    - '**/*'  # Upload all files
+  base-directory: build # Specify the directory that contains build artifacts
+  discard-paths: yes
+
+cache:
+  paths:
+    - 'node_modules/**/*'  # Caching dependencies for future builds
