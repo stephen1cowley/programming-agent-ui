@@ -7,7 +7,7 @@ files:
 hooks:
   ApplicationStop:
     - location: scripts/stop-server.sh
-      timeout: 300
+      timeout: 25
   AfterInstall:
     - location: scripts/deploy.sh
       timeout: 300
