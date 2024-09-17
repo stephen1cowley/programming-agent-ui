@@ -1,12 +1,12 @@
 #!/bin/bash
 
 cd ~
-touch test3.txt
-curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh
-sudo bash nodesource_setup.sh
-sudo apt update
-sudo apt install -y nodejs
-sudo apt install -y npm
-sudo apt-get install -y nginx
+touch test4.txt
+sudo apt update && sudo apt upgrade -y
 
+# Install NGINX
+sudo apt install nginx -y
+
+# Install Node.js and npm
+sudo apt install nodejs npm -y
 
