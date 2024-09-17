@@ -1,22 +1,29 @@
 version: 0.0
 os: linux
+
 files:
   - source: /
-    destination: /home/ubuntu/react-app
-    overwrite: yes
+    destination: /home/ubuntu/server
+
+permissions:
+  - object: /
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
 
 hooks:
-  # BeforeInstall:
-  #   - location: scripts/install_dependencies.sh
-  #     timeout: 30
-  #     runas: ubuntu
+  BeforeInstall:
+    - location: scripts/before_install.sh
+      timeout: 300
+      runas: root
+
+  AfterInstall:
+    - location: scripts/after_install.sh
+      timeout: 300
+      runas: root
 
   ApplicationStart:
-    - location: scripts/start_react_server.sh
-      timeout: 30
-      runas: ubuntu
+    - location: scripts/app_start.sh
+      timeout: 300
+      runas: root
 
-  ValidateService:
-    - location: scripts/validate_service.sh
-      timeout: 30
-      runas: ubuntu
