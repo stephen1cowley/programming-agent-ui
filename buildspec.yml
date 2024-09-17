@@ -15,8 +15,3 @@ phases:
 artifacts:
   files:
     - '**/*'
-
-cache:
-  paths:
-    - '/root/.npm/**/*'  # Cache the npm cache to speed up downloads
-    - 'package-lock.json'
