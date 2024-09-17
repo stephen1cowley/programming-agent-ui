@@ -4,7 +4,7 @@ cd ~
 
 sudo apt update
 
-# Install NGINX
+# Install NGINX...
 sudo apt install nginx -y
 
 # Install Node.js and npm
