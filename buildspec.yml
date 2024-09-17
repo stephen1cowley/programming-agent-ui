@@ -18,4 +18,4 @@ artifacts:
 
 cache:
   paths:
-    - node_modules/**/*
+    - /root/.npm/**/*
