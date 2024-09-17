@@ -18,4 +18,5 @@ artifacts:
 
 cache:
   paths:
-    - /node_modules/**/*
+    - '/root/.npm/**/*'  # Cache the npm cache to speed up downloads
+    - 'package-lock.json'
