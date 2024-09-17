@@ -3,7 +3,7 @@ os: linux
 
 files:
   - source: /
-    destination: /var/www/react
+    destination: /home/ubuntu/react-app
 
 permissions:
   - object: /
