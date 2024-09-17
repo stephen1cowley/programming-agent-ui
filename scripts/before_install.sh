@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd ~
-touch test.txt
+touch test2.txt
 curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh
 sudo bash nodesource_setup.sh
 sudo apt update
