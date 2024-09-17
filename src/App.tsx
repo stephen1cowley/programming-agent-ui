@@ -58,7 +58,7 @@ function App() {
   }, [])
   return (
     <div className="App">
-      <h1>Programming Agent</h1>
+      <h1>Your Programming Agent</h1>
       <DeepChat
         connect={{ url: process.env.REACT_APP_BACKEND_SERVER + '/api/message'}}
         style={{ width: '90vw', height: '80vh', borderRadius: '10px' }}
