@@ -6,7 +6,7 @@ phases:
       nodejs: 18
     
     commands:
-      - npm install
+      - npm ci
   
   build:
     commands:
