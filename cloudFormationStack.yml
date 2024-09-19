@@ -1,0 +1,1531 @@
+---
+Metadata:
+  TemplateId: "arn:aws:cloudformation:eu-west-2:211125355525:generatedTemplate/f3dc3fbe-482b-4371-bd4f-5cb93ed90856"
+Resources:
+  EC2SecurityGroup00sg0479056251699d015004qaun:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SecurityGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      GroupDescription: "launch-wizard-19 created 2024-09-17T18:22:59.876Z"
+      GroupName: "launch-wizard-19"
+      VpcId:
+        Ref: "EC2VPC00vpc0f87d77326035aa8000ZzqXs"
+      SecurityGroupIngress:
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        FromPort: 80
+        ToPort: 80
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        FromPort: 8080
+        ToPort: 8080
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        FromPort: 22
+        ToPort: 22
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        FromPort: 443
+        ToPort: 443
+      SecurityGroupEgress:
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "-1"
+        FromPort: -1
+        ToPort: -1
+  EC2SubnetRouteTableAssociation00rtbassoc0fb1c2a8c135f03a000Xkseg:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetRouteTableAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb0a0817b176e5bab6c00okaSl"
+      SubnetId:
+        Ref: "EC2Subnet00subnet04c0984657fe5ae8900cb9SN"
+  EC2VolumeAttachment00vol03a82e7dc1e8f7e7f00zMYg0:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::VolumeAttachment"
+    DeletionPolicy: "Retain"
+    Properties:
+      InstanceId: "i-0e4072896851ec9cf"
+      VolumeId: "vol-03a82e7dc1e8f7e7f"
+      Device: "/dev/sda1"
+  ElasticLoadBalancingV2TargetGroup00targetgroupBackendTargetGroup3c40dd2cb2fecc4d00wV0YI:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::ElasticLoadBalancingV2::TargetGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      IpAddressType: "ipv4"
+      HealthCheckIntervalSeconds: 30
+      Matcher:
+        HttpCode: "200"
+      HealthCheckPath: "/api/test/"
+      Port: 8080
+      Targets:
+      - Port: 8080
+        Id: "i-0e4072896851ec9cf"
+      HealthCheckEnabled: true
+      ProtocolVersion: "HTTP1"
+      UnhealthyThresholdCount: 2
+      HealthCheckTimeoutSeconds: 5
+      Name: "BackendTargetGroup"
+      VpcId:
+        Ref: "EC2VPC00vpc0ba95e8ae8327e13200F931z"
+      HealthyThresholdCount: 5
+      HealthCheckProtocol: "HTTP"
+      TargetGroupAttributes:
+      - Value: "lb_cookie"
+        Key: "stickiness.type"
+      - Value: "86400"
+        Key: "stickiness.app_cookie.duration_seconds"
+      - Value: "1"
+        Key: "target_group_health.dns_failover.minimum_healthy_targets.count"
+      - Value: "use_load_balancer_configuration"
+        Key: "load_balancing.cross_zone.enabled"
+      - Value: "86400"
+        Key: "stickiness.lb_cookie.duration_seconds"
+      - Value: "off"
+        Key: "target_group_health.dns_failover.minimum_healthy_targets.percentage"
+      - Value: "false"
+        Key: "stickiness.enabled"
+      - Value: "off"
+        Key: "target_group_health.unhealthy_state_routing.minimum_healthy_targets.percentage"
+      - Value: "0"
+        Key: "slow_start.duration_seconds"
+      - Value: "300"
+        Key: "deregistration_delay.timeout_seconds"
+      - Value: "1"
+        Key: "target_group_health.unhealthy_state_routing.minimum_healthy_targets.count"
+      - Value: "off"
+        Key: "load_balancing.algorithm.anomaly_mitigation"
+      - Value: ""
+        Key: "stickiness.app_cookie.cookie_name"
+      - Value: "round_robin"
+        Key: "load_balancing.algorithm.type"
+      TargetType: "instance"
+      HealthCheckPort: "traffic-port"
+      Protocol: "HTTP"
+      Tags: []
+  EC2Subnet00subnet04b2ce847150cf1d000PIBz3:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Subnet"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0f87d77326035aa8000ZzqXs"
+      MapPublicIpOnLaunch: true
+      EnableDns64: false
+      AvailabilityZoneId: "euw2-az2"
+      PrivateDnsNameOptionsOnLaunch:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      CidrBlock: "172.31.16.0/20"
+      Ipv6Native: false
+      Tags: []
+  EC2NatGateway00nat0e2781ffbfcf0f79e00mDziL:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::NatGateway"
+    DeletionPolicy: "Retain"
+    Properties:
+      PrivateIpAddress: "10.0.12.83"
+      ConnectivityType: "public"
+      VpcId: "vpc-0ba95e8ae8327e132"
+      EniId: "eni-00ef974fdde0414cb"
+      AllocationId: "eipalloc-0953a32b58c2ef245"
+      SubnetId:
+        Ref: "EC2Subnet00subnet0ee7ff7f6f8a23c2000NrBtf"
+      Tags:
+      - Value: "project-nat-public1-eu-west-2a"
+        Key: "Name"
+  EC2RouteTable00rtb0eaf4e5430597855f00N5v0S:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::RouteTable"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0ba95e8ae8327e13200F931z"
+      Tags:
+      - Value: "project-rtb-private1-eu-west-2a"
+        Key: "Name"
+  ElasticLoadBalancingV2LoadBalancer00loadbalancerappTestStackALB84b297b5dcc2d02e00DUgWh:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::ElasticLoadBalancingV2::LoadBalancer"
+    DeletionPolicy: "Retain"
+    Properties:
+      IpAddressType: "ipv4"
+      SecurityGroups:
+      - "sg-02d88036a9910df1e"
+      LoadBalancerAttributes:
+      - Value: ""
+        Key: "access_logs.s3.prefix"
+      - Value: "append"
+        Key: "routing.http.xff_header_processing.mode"
+      - Value: "true"
+        Key: "routing.http2.enabled"
+      - Value: "false"
+        Key: "waf.fail_open.enabled"
+      - Value: ""
+        Key: "connection_logs.s3.bucket"
+      - Value: "false"
+        Key: "access_logs.s3.enabled"
+      - Value: "defensive"
+        Key: "routing.http.desync_mitigation_mode"
+      - Value: ""
+        Key: "connection_logs.s3.prefix"
+      - Value: "false"
+        Key: "routing.http.x_amzn_tls_version_and_cipher_suite.enabled"
+      - Value: "false"
+        Key: "routing.http.preserve_host_header.enabled"
+      - Value: "true"
+        Key: "load_balancing.cross_zone.enabled"
+      - Value: "false"
+        Key: "routing.http.xff_client_port.enabled"
+      - Value: ""
+        Key: "access_logs.s3.bucket"
+      - Value: "false"
+        Key: "deletion_protection.enabled"
+      - Value: "3600"
+        Key: "client_keep_alive.seconds"
+      - Value: "false"
+        Key: "routing.http.drop_invalid_header_fields.enabled"
+      - Value: "false"
+        Key: "connection_logs.s3.enabled"
+      - Value: "60"
+        Key: "idle_timeout.timeout_seconds"
+      Subnets:
+      - Ref: "EC2Subnet00subnet05b3b838935e29eeb00KEFTl"
+      - Ref: "EC2Subnet00subnet0ee7ff7f6f8a23c2000NrBtf"
+      Type: "application"
+      Scheme: "internal"
+      EnforceSecurityGroupInboundRulesOnPrivateLinkTraffic: ""
+      Tags: []
+      Name: "TestStackALB"
+      SubnetMappings:
+      - SubnetId:
+          Ref: "EC2Subnet00subnet0ee7ff7f6f8a23c2000NrBtf"
+      - SubnetId:
+          Ref: "EC2Subnet00subnet05b3b838935e29eeb00KEFTl"
+  EC2NetworkInterface00eni096ee00933b8f075d006Qi60:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::NetworkInterface"
+    DeletionPolicy: "Retain"
+    Properties:
+      Description: ""
+      PrivateIpAddress: "172.31.26.44"
+      PrivateIpAddresses:
+      - PrivateIpAddress: "172.31.26.44"
+        Primary: true
+      SecondaryPrivateIpAddressCount: 0
+      Ipv6PrefixCount: 0
+      Ipv4Prefixes: []
+      Ipv4PrefixCount: 0
+      GroupSet:
+      - "sg-0edb4cdd9a4bcb1b9"
+      Ipv6Prefixes: []
+      SubnetId:
+        Ref: "EC2Subnet00subnet04b2ce847150cf1d000PIBz3"
+      SourceDestCheck: true
+      InterfaceType: "interface"
+      Tags: []
+  EC2Volume00vol05be051cb726c10c800AdK2Z:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Volume"
+    DeletionPolicy: "Retain"
+    Properties:
+      MultiAttachEnabled: false
+      SnapshotId: "snap-06ee67e2e3bd10fb9"
+      VolumeType: "gp3"
+      Encrypted: false
+      Size: 8
+      AutoEnableIO: true
+      AvailabilityZone: "eu-west-2a"
+      Throughput: 125
+      Iops: 3000
+      Tags: []
+  EC2SecurityGroup00sg0ceaeb26b50099d4c00qx7L5:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SecurityGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      GroupDescription: "programming-agent-security-group 2024-09-16T09:02:56.917Z"
+      GroupName: "programming-agent-security-group"
+      VpcId:
+        Ref: "EC2VPC00vpc0666c1efed747a43400j4S9N"
+      SecurityGroupIngress:
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        FromPort: 8080
+        ToPort: 8080
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        FromPort: 22
+        ToPort: 22
+      SecurityGroupEgress:
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "-1"
+        FromPort: -1
+        ToPort: -1
+  EC2Subnet00subnet05b3b838935e29eeb00KEFTl:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Subnet"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0ba95e8ae8327e13200F931z"
+      MapPublicIpOnLaunch: false
+      EnableDns64: false
+      AvailabilityZoneId: "euw2-az3"
+      PrivateDnsNameOptionsOnLaunch:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      CidrBlock: "10.0.16.0/20"
+      Ipv6Native: false
+      Tags:
+      - Value: "project-subnet-public2-eu-west-2b"
+        Key: "Name"
+  EC2Route00rtb0eaf4e5430597855f00I0fej:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Route"
+    DeletionPolicy: "Retain"
+    Properties:
+      NatGatewayId:
+        Ref: "EC2NatGateway00nat0e2781ffbfcf0f79e00mDziL"
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb0eaf4e5430597855f00N5v0S"
+      DestinationCidrBlock: "0.0.0.0/0"
+  EC2KeyPair00goserver00WpKIn:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::KeyPair"
+    DeletionPolicy: "Retain"
+    Properties:
+      KeyName: "goserver"
+      KeyType: "rsa"
+      PublicKeyMaterial: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDyK7Ja0XoBAu/f5jQW7sPxbFv26xdsTx6v0DhbCrDacM/HoLS3AEAeUX5KD7h6AQ7PIT7oXtD00RU+5Bg9vZvcb5n0tHtfuGXs0ufWxZVHdoG+96/PAn0NYGk5z6FLWmrAN1Yfm35QJx70HVpVh9dZjH+TLHHqQEy8XdO83AiON5O56ebTw/c9BVyNW0bbe2dmPKV1zQUgfu/ICRgBmsWmEMiP82L8OfjMkKvZf2T+sBYxIp5sl2BbDDbHcjd+LppaB3BwhkUvuDv2EINHfQogwvF4MVq5y2fdxsTy2nL/yn5lb3ZzzxUZHc1L6fXAIgAJJAXJsoAOKWh16qgzFfhr\
+        \ goserver\n"
+      Tags: []
+  EC2Route00rtb0a0817b176e5bab6c00xGRdG:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Route"
+    DeletionPolicy: "Retain"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb0a0817b176e5bab6c00okaSl"
+      DestinationPrefixListId: "pl-7ca54015"
+      GatewayId: "vpce-03ff16f9611b47dd7"
+      VpcEndpointId: "vpce-03ff16f9611b47dd7"
+  EC2Instance00i04ef5fcfd113ae95200GjKgB:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Instance"
+    DeletionPolicy: "Retain"
+    Properties:
+      Tenancy: "default"
+      SecurityGroups:
+      - "frontend-firewall"
+      PrivateIpAddress: "10.0.27.67"
+      BlockDeviceMappings:
+      - Ebs:
+          SnapshotId: "snap-06ee67e2e3bd10fb9"
+          VolumeType: "gp3"
+          Iops: 3000
+          VolumeSize: 8
+          Encrypted: false
+          DeleteOnTermination: true
+        DeviceName: "/dev/sda1"
+      IamInstanceProfile:
+        Ref: "IAMInstanceProfile00EC2RoleTutor00cg3wA"
+      SubnetId:
+        Ref: "EC2Subnet00subnet05b3b838935e29eeb00KEFTl"
+      EbsOptimized: true
+      Volumes:
+      - VolumeId: "vol-01a354bebad238439"
+        Device: "/dev/sda1"
+      NetworkInterfaces:
+      - PrivateIpAddresses:
+        - PrivateIpAddress: "10.0.27.67"
+          Primary: true
+        SecondaryPrivateIpAddressCount: 0
+        DeviceIndex: "0"
+        GroupSet:
+        - Ref: "EC2SecurityGroup00sg07d875c0a076ceeba00aVlJj"
+        Ipv6Addresses: []
+        SubnetId:
+          Ref: "EC2Subnet00subnet05b3b838935e29eeb00KEFTl"
+        AssociatePublicIpAddress: true
+        NetworkInterfaceId:
+          Ref: "EC2NetworkInterface00eni0919ba529f8c1ce9a00rTWqM"
+        DeleteOnTermination: true
+      ImageId: "ami-01ec84b284795cbc7"
+      InstanceType: "t3.medium"
+      Monitoring: false
+      Tags:
+      - Value: "Test Stack Frontend"
+        Key: "Project"
+      - Value: "Test Stack Frontend"
+        Key: "Name"
+      InstanceInitiatedShutdownBehavior: "stop"
+      CpuOptions:
+        ThreadsPerCore: 2
+        CoreCount: 1
+      AvailabilityZone: "eu-west-2b"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      SecurityGroupIds:
+      - "sg-07d875c0a076ceeba"
+      DisableApiTermination: false
+      KeyName: "goserver"
+      SourceDestCheck: true
+      PlacementGroupName: ""
+      VpcId: "vpc-0ba95e8ae8327e132"
+      State:
+        Code: "16"
+        Name: "running"
+      CreditSpecification:
+        CPUCredits: "unlimited"
+  EC2SubnetNetworkAclAssociation00aclassoc01421f6582d2207ff00qDcBi:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetNetworkAclAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      NetworkAclId:
+        Ref: "EC2NetworkAcl00acl0005053310392f73c00fCTm2"
+      SubnetId:
+        Ref: "EC2Subnet00subnet078ea2421dfa0002900b1nVM"
+  EC2VolumeAttachment00vol060badf54d80843be00P6erg:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::VolumeAttachment"
+    DeletionPolicy: "Retain"
+    Properties:
+      InstanceId: "i-066d3046adc3e86cd"
+      VolumeId: "vol-060badf54d80843be"
+      Device: "/dev/sda1"
+  EC2Subnet00subnet03c42d2d05c6c51cf00fbVSy:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Subnet"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0666c1efed747a43400j4S9N"
+      MapPublicIpOnLaunch: false
+      EnableDns64: false
+      AvailabilityZoneId: "euw2-az2"
+      PrivateDnsNameOptionsOnLaunch:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      CidrBlock: "10.0.128.0/20"
+      Ipv6Native: false
+      Tags:
+      - Value: "programming-agent-subnet-private1-eu-west-2a"
+        Key: "Name"
+  EC2NetworkInterface00eni05c214b7a7ad5d75400ZmWcf:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::NetworkInterface"
+    DeletionPolicy: "Retain"
+    Properties:
+      Description: ""
+      PrivateIpAddress: "10.0.137.36"
+      PrivateIpAddresses:
+      - PrivateIpAddress: "10.0.137.36"
+        Primary: true
+      SecondaryPrivateIpAddressCount: 0
+      Ipv6PrefixCount: 0
+      Ipv4Prefixes: []
+      Ipv4PrefixCount: 0
+      GroupSet:
+      - "sg-0ceaeb26b50099d4c"
+      Ipv6Prefixes: []
+      SubnetId:
+        Ref: "EC2Subnet00subnet03c42d2d05c6c51cf00fbVSy"
+      SourceDestCheck: true
+      InterfaceType: "interface"
+      Tags: []
+  EC2RouteTable00rtb0e4f58340edacbf6300NPhRb:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::RouteTable"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0ba95e8ae8327e13200F931z"
+      Tags:
+      - Value: "project-rtb-public"
+        Key: "Name"
+  EC2NetworkInterface00eni0421314b22e9450a500fwOsS:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::NetworkInterface"
+    DeletionPolicy: "Retain"
+    Properties:
+      Description: ""
+      PrivateIpAddress: "10.0.141.9"
+      PrivateIpAddresses:
+      - PrivateIpAddress: "10.0.141.9"
+        Primary: true
+      SecondaryPrivateIpAddressCount: 0
+      Ipv6PrefixCount: 0
+      Ipv4Prefixes: []
+      Ipv4PrefixCount: 0
+      GroupSet:
+      - "sg-02d88036a9910df1e"
+      Ipv6Prefixes: []
+      SubnetId:
+        Ref: "EC2Subnet00subnet078ea2421dfa0002900b1nVM"
+      SourceDestCheck: true
+      InterfaceType: "interface"
+      Tags: []
+  EC2VPC00vpc0666c1efed747a43400j4S9N:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::VPC"
+    DeletionPolicy: "Retain"
+    Properties:
+      CidrBlock: "10.0.0.0/16"
+      EnableDnsSupport: true
+      InstanceTenancy: "default"
+      EnableDnsHostnames: true
+      Tags:
+      - Value: "programming-agent-vpc"
+        Key: "Name"
+  EC2Volume00vol03a82e7dc1e8f7e7f00ZhMCK:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Volume"
+    DeletionPolicy: "Retain"
+    Properties:
+      MultiAttachEnabled: false
+      SnapshotId: "snap-0330553e6bd80fab6"
+      VolumeType: "gp3"
+      Encrypted: false
+      Size: 8
+      AutoEnableIO: true
+      AvailabilityZone: "eu-west-2a"
+      Throughput: 125
+      Iops: 3000
+      Tags: []
+  IAMInstanceProfile00EC2RoleTutor00cg3wA:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::InstanceProfile"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      Roles:
+      - Ref: "IAMRole00EC2RoleTutor0010lsO"
+      InstanceProfileName:
+        Ref: "IAMRole00EC2RoleTutor0010lsO"
+  EC2NetworkInterface00eni071a0640c2880392000rzFuy:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::NetworkInterface"
+    DeletionPolicy: "Retain"
+    Properties:
+      Description: ""
+      PrivateIpAddress: "172.31.31.84"
+      PrivateIpAddresses:
+      - PrivateIpAddress: "172.31.31.84"
+        Primary: true
+      SecondaryPrivateIpAddressCount: 0
+      Ipv6PrefixCount: 0
+      Ipv4Prefixes: []
+      Ipv4PrefixCount: 0
+      GroupSet:
+      - "sg-0479056251699d015"
+      Ipv6Prefixes: []
+      SubnetId:
+        Ref: "EC2Subnet00subnet04b2ce847150cf1d000PIBz3"
+      SourceDestCheck: true
+      InterfaceType: "interface"
+      Tags: []
+  EC2Subnet00subnet04c0984657fe5ae8900cb9SN:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Subnet"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0ba95e8ae8327e13200F931z"
+      MapPublicIpOnLaunch: false
+      EnableDns64: false
+      AvailabilityZoneId: "euw2-az3"
+      PrivateDnsNameOptionsOnLaunch:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      CidrBlock: "10.0.144.0/20"
+      Ipv6Native: false
+      Tags:
+      - Value: "project-subnet-private2-eu-west-2b"
+        Key: "Name"
+  EC2NetworkInterface00eni079b99eeb9bf07ebd00H0V8u:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::NetworkInterface"
+    DeletionPolicy: "Retain"
+    Properties:
+      Description: ""
+      PrivateIpAddress: "10.0.12.223"
+      PrivateIpAddresses:
+      - PrivateIpAddress: "10.0.12.223"
+        Primary: true
+      SecondaryPrivateIpAddressCount: 0
+      Ipv6PrefixCount: 0
+      Ipv4Prefixes: []
+      Ipv4PrefixCount: 0
+      GroupSet:
+      - "sg-0af86b1f7e8ae7b78"
+      Ipv6Prefixes: []
+      SubnetId:
+        Ref: "EC2Subnet00subnet094c069ca18df1bcd00mMxZ0"
+      SourceDestCheck: true
+      InterfaceType: "interface"
+      Tags: []
+  EC2Instance00i0dd914299acc9673d008oPcq:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Instance"
+    DeletionPolicy: "Retain"
+    Properties:
+      Tenancy: "default"
+      SecurityGroups:
+      - "programming-agent-security-group"
+      PrivateIpAddress: "10.0.137.36"
+      BlockDeviceMappings:
+      - Ebs:
+          SnapshotId: "snap-06ee67e2e3bd10fb9"
+          VolumeType: "gp3"
+          Iops: 3000
+          VolumeSize: 8
+          Encrypted: false
+          DeleteOnTermination: true
+        DeviceName: "/dev/sda1"
+      IamInstanceProfile:
+        Ref: "IAMInstanceProfile00EC2RoleTutor00cg3wA"
+      SubnetId:
+        Ref: "EC2Subnet00subnet03c42d2d05c6c51cf00fbVSy"
+      EbsOptimized: true
+      Volumes:
+      - VolumeId: "vol-0001872dd65c25c1f"
+        Device: "/dev/sda1"
+      NetworkInterfaces:
+      - PrivateIpAddresses:
+        - PrivateIpAddress: "10.0.137.36"
+          Primary: true
+        SecondaryPrivateIpAddressCount: 0
+        DeviceIndex: "0"
+        GroupSet:
+        - Ref: "EC2SecurityGroup00sg0ceaeb26b50099d4c00qx7L5"
+        Ipv6Addresses: []
+        SubnetId:
+          Ref: "EC2Subnet00subnet03c42d2d05c6c51cf00fbVSy"
+        AssociatePublicIpAddress: false
+        NetworkInterfaceId:
+          Ref: "EC2NetworkInterface00eni05c214b7a7ad5d75400ZmWcf"
+        DeleteOnTermination: true
+      ImageId: "ami-01ec84b284795cbc7"
+      InstanceType: "t3.medium"
+      Monitoring: false
+      Tags:
+      - Value: "BackendTestStack"
+        Key: "Name"
+      InstanceInitiatedShutdownBehavior: "stop"
+      CpuOptions:
+        ThreadsPerCore: 2
+        CoreCount: 1
+      AvailabilityZone: "eu-west-2a"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      SecurityGroupIds:
+      - "sg-0ceaeb26b50099d4c"
+      DisableApiTermination: false
+      KeyName: "goserver"
+      SourceDestCheck: true
+      PlacementGroupName: ""
+      VpcId: "vpc-0666c1efed747a434"
+      State:
+        Code: "16"
+        Name: "running"
+      CreditSpecification:
+        CPUCredits: "unlimited"
+  EC2SubnetNetworkAclAssociation00aclassoc0c0cdefaa95ef52f600Vdtnt:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetNetworkAclAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      NetworkAclId:
+        Ref: "EC2NetworkAcl00acl0005053310392f73c00fCTm2"
+      SubnetId:
+        Ref: "EC2Subnet00subnet05b3b838935e29eeb00KEFTl"
+  EC2SubnetNetworkAclAssociation00aclassoc0d24e7e7224c3a79700ShqLT:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetNetworkAclAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      NetworkAclId:
+        Ref: "EC2NetworkAcl00acl0005053310392f73c00fCTm2"
+      SubnetId:
+        Ref: "EC2Subnet00subnet0ee7ff7f6f8a23c2000NrBtf"
+  EC2NetworkInterface00eni0f0869cc1d75c824a00qHkQw:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::NetworkInterface"
+    DeletionPolicy: "Retain"
+    Properties:
+      Description: ""
+      PrivateIpAddress: "10.0.131.129"
+      PrivateIpAddresses:
+      - PrivateIpAddress: "10.0.131.129"
+        Primary: true
+      SecondaryPrivateIpAddressCount: 0
+      Ipv6PrefixCount: 0
+      Ipv4Prefixes: []
+      Ipv4PrefixCount: 0
+      GroupSet:
+      - "sg-0ceaeb26b50099d4c"
+      Ipv6Prefixes: []
+      SubnetId:
+        Ref: "EC2Subnet00subnet03c42d2d05c6c51cf00fbVSy"
+      SourceDestCheck: true
+      InterfaceType: "interface"
+      Tags: []
+  EC2VolumeAttachment00vol0dcc21aa53b09552300SAXq5:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::VolumeAttachment"
+    DeletionPolicy: "Retain"
+    Properties:
+      InstanceId: "i-098c0dbb0eed52f28"
+      VolumeId: "vol-0dcc21aa53b095523"
+      Device: "/dev/sda1"
+  ElasticLoadBalancingV2Listener00listenerappTestStackALB84b297b5dcc2d02e25e2ea38c742d44000nAur0:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::ElasticLoadBalancingV2::Listener"
+    DeletionPolicy: "Retain"
+    Properties:
+      Protocol: "HTTP"
+      LoadBalancerArn:
+        Ref: "ElasticLoadBalancingV2LoadBalancer00loadbalancerappTestStackALB84b297b5dcc2d02e00DUgWh"
+      DefaultActions:
+      - TargetGroupArn:
+          Ref: "ElasticLoadBalancingV2TargetGroup00targetgroupBackendTargetGroup3c40dd2cb2fecc4d00wV0YI"
+        Type: "forward"
+        ForwardConfig:
+          TargetGroupStickinessConfig:
+            Enabled: false
+          TargetGroups:
+          - TargetGroupArn:
+              Ref: "ElasticLoadBalancingV2TargetGroup00targetgroupBackendTargetGroup3c40dd2cb2fecc4d00wV0YI"
+            Weight: 1
+      Port: 8080
+  EC2VolumeAttachment00vol0e8ddf12b71a4555d00k9CZ6:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::VolumeAttachment"
+    DeletionPolicy: "Retain"
+    Properties:
+      InstanceId: "i-030057e21713ff55b"
+      VolumeId: "vol-0e8ddf12b71a4555d"
+      Device: "/dev/sda1"
+  EC2Subnet00subnet094c069ca18df1bcd00mMxZ0:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Subnet"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0666c1efed747a43400j4S9N"
+      MapPublicIpOnLaunch: true
+      EnableDns64: false
+      AvailabilityZoneId: "euw2-az2"
+      PrivateDnsNameOptionsOnLaunch:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      CidrBlock: "10.0.0.0/20"
+      Ipv6Native: false
+      Tags:
+      - Value: "programming-agent-subnet-public1-eu-west-2a"
+        Key: "Name"
+  EC2Route00rtb0a0817b176e5bab6c00mUXLx:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Route"
+    DeletionPolicy: "Retain"
+    Properties:
+      NatGatewayId:
+        Ref: "EC2NatGateway00nat0e2781ffbfcf0f79e00mDziL"
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb0a0817b176e5bab6c00okaSl"
+      DestinationCidrBlock: "0.0.0.0/0"
+  EC2Route00rtb0a0817b176e5bab6c00Tn3Qb:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Route"
+    DeletionPolicy: "Retain"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb0a0817b176e5bab6c00okaSl"
+      DestinationCidrBlock: "10.0.0.0/16"
+      GatewayId: "local"
+      VpcEndpointId: "local"
+  EC2Route00rtb0e4f58340edacbf6300aLjeF:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Route"
+    DeletionPolicy: "Retain"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb0e4f58340edacbf6300NPhRb"
+      DestinationCidrBlock: "0.0.0.0/0"
+      GatewayId:
+        Ref: "EC2InternetGateway00igw0c2256cadbebea43f005vI3L"
+      VpcEndpointId: "igw-0c2256cadbebea43f"
+  EC2SecurityGroup00sg0af86b1f7e8ae7b7800IqBaT:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SecurityGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      GroupDescription: "programming-agent-frontend-security-group created 2024-09-16T10:12:40.806Z"
+      GroupName: "programming-agent-frontend-security-group"
+      VpcId:
+        Ref: "EC2VPC00vpc0666c1efed747a43400j4S9N"
+      SecurityGroupIngress:
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        Description: "SSH for admin desktop"
+        FromPort: 22
+        ToPort: 22
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        Description: "React server"
+        FromPort: 3000
+        ToPort: 3000
+      SecurityGroupEgress:
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "-1"
+        FromPort: -1
+        ToPort: -1
+  EC2Instance00i0e4072896851ec9cf00XmfNv:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Instance"
+    DeletionPolicy: "Retain"
+    Properties:
+      Tenancy: "default"
+      SecurityGroups:
+      - "backend-firewall"
+      PrivateIpAddress: "10.0.141.9"
+      BlockDeviceMappings:
+      - Ebs:
+          SnapshotId: "snap-0330553e6bd80fab6"
+          VolumeType: "gp3"
+          Iops: 3000
+          VolumeSize: 8
+          Encrypted: false
+          DeleteOnTermination: true
+        DeviceName: "/dev/sda1"
+      IamInstanceProfile:
+        Ref: "IAMInstanceProfile00EC2RoleTutor00cg3wA"
+      SubnetId:
+        Ref: "EC2Subnet00subnet078ea2421dfa0002900b1nVM"
+      EbsOptimized: true
+      Volumes:
+      - VolumeId: "vol-03a82e7dc1e8f7e7f"
+        Device: "/dev/sda1"
+      NetworkInterfaces:
+      - PrivateIpAddresses:
+        - PrivateIpAddress: "10.0.141.9"
+          Primary: true
+        SecondaryPrivateIpAddressCount: 0
+        DeviceIndex: "0"
+        GroupSet:
+        - Ref: "EC2SecurityGroup00sg02d88036a9910df1e00RSXlK"
+        Ipv6Addresses: []
+        SubnetId:
+          Ref: "EC2Subnet00subnet078ea2421dfa0002900b1nVM"
+        AssociatePublicIpAddress: false
+        NetworkInterfaceId:
+          Ref: "EC2NetworkInterface00eni0421314b22e9450a500fwOsS"
+        DeleteOnTermination: true
+      ImageId: "ami-07599adbef4e310c8"
+      InstanceType: "t3.large"
+      Monitoring: false
+      Tags:
+      - Value: "Test Stack Backend 2"
+        Key: "Name"
+      - Value: "Program agent backend EC2"
+        Key: "Project"
+      InstanceInitiatedShutdownBehavior: "stop"
+      CpuOptions:
+        ThreadsPerCore: 2
+        CoreCount: 1
+      AvailabilityZone: "eu-west-2a"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      SecurityGroupIds:
+      - "sg-02d88036a9910df1e"
+      DisableApiTermination: false
+      KeyName: "goserver"
+      SourceDestCheck: true
+      PlacementGroupName: ""
+      VpcId: "vpc-0ba95e8ae8327e132"
+      State:
+        Code: "16"
+        Name: "running"
+      CreditSpecification:
+        CPUCredits: "unlimited"
+  EC2Volume00vol0e8ddf12b71a4555d00KemAb:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Volume"
+    DeletionPolicy: "Retain"
+    Properties:
+      MultiAttachEnabled: false
+      SnapshotId: "snap-06ee67e2e3bd10fb9"
+      VolumeType: "gp3"
+      Encrypted: false
+      Size: 8
+      AutoEnableIO: true
+      AvailabilityZone: "eu-west-2a"
+      Throughput: 125
+      Iops: 3000
+      Tags: []
+  EC2VolumeAttachment00vol05be051cb726c10c800g98nD:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::VolumeAttachment"
+    DeletionPolicy: "Retain"
+    Properties:
+      InstanceId: "i-0c2ca19ac4f8223b0"
+      VolumeId: "vol-05be051cb726c10c8"
+      Device: "/dev/sda1"
+  EC2RouteTable00rtb051a6f950a415dfb000UWzK4:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::RouteTable"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0ba95e8ae8327e13200F931z"
+  EC2Volume00vol01a354bebad238439003vtS8:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Volume"
+    DeletionPolicy: "Retain"
+    Properties:
+      MultiAttachEnabled: false
+      SnapshotId: "snap-06ee67e2e3bd10fb9"
+      VolumeType: "gp3"
+      Encrypted: false
+      Size: 8
+      AutoEnableIO: true
+      AvailabilityZone: "eu-west-2b"
+      Throughput: 125
+      Iops: 3000
+      Tags: []
+  EC2VPCDHCPOptionsAssociation00vpc0ba95e8ae8327e13200xJbOS:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::VPCDHCPOptionsAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0ba95e8ae8327e13200F931z"
+      DhcpOptionsId:
+        Ref: "EC2DHCPOptions00dopt08588673299bf22b400Wle66"
+  EC2Subnet00subnet078ea2421dfa0002900b1nVM:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Subnet"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0ba95e8ae8327e13200F931z"
+      MapPublicIpOnLaunch: false
+      EnableDns64: false
+      AvailabilityZoneId: "euw2-az2"
+      PrivateDnsNameOptionsOnLaunch:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      CidrBlock: "10.0.128.0/20"
+      Ipv6Native: false
+      Tags:
+      - Value: "project-subnet-private1-eu-west-2a"
+        Key: "Name"
+  EC2VolumeAttachment00vol0001872dd65c25c1f00QHDmI:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::VolumeAttachment"
+    DeletionPolicy: "Retain"
+    Properties:
+      InstanceId: "i-0dd914299acc9673d"
+      VolumeId: "vol-0001872dd65c25c1f"
+      Device: "/dev/sda1"
+  EC2SecurityGroup00sg07d875c0a076ceeba00aVlJj:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SecurityGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      GroupDescription: "frontend-firewall created 2024-09-19T11:34:38.054Z"
+      GroupName: "frontend-firewall"
+      VpcId:
+        Ref: "EC2VPC00vpc0ba95e8ae8327e13200F931z"
+      SecurityGroupIngress:
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        FromPort: 80
+        ToPort: 80
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        FromPort: 22
+        ToPort: 22
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        FromPort: 3000
+        ToPort: 3000
+      SecurityGroupEgress:
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "-1"
+        FromPort: -1
+        ToPort: -1
+  EC2Instance00i0c2ca19ac4f8223b000oDvgF:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Instance"
+    DeletionPolicy: "Retain"
+    Properties:
+      Tenancy: "default"
+      SecurityGroups:
+      - "launch-wizard-18"
+      PrivateIpAddress: "172.31.26.44"
+      BlockDeviceMappings:
+      - Ebs:
+          SnapshotId: "snap-06ee67e2e3bd10fb9"
+          VolumeType: "gp3"
+          Iops: 3000
+          VolumeSize: 8
+          Encrypted: false
+          DeleteOnTermination: true
+        DeviceName: "/dev/sda1"
+      IamInstanceProfile:
+        Ref: "IAMInstanceProfile00EC2RoleTutor00cg3wA"
+      SubnetId:
+        Ref: "EC2Subnet00subnet04b2ce847150cf1d000PIBz3"
+      EbsOptimized: true
+      Volumes:
+      - VolumeId: "vol-05be051cb726c10c8"
+        Device: "/dev/sda1"
+      NetworkInterfaces:
+      - PrivateIpAddresses:
+        - PrivateIpAddress: "172.31.26.44"
+          Primary: true
+        SecondaryPrivateIpAddressCount: 0
+        DeviceIndex: "0"
+        GroupSet:
+        - Ref: "EC2SecurityGroup00sg0edb4cdd9a4bcb1b900MH2Z7"
+        Ipv6Addresses: []
+        SubnetId:
+          Ref: "EC2Subnet00subnet04b2ce847150cf1d000PIBz3"
+        AssociatePublicIpAddress: false
+        NetworkInterfaceId:
+          Ref: "EC2NetworkInterface00eni096ee00933b8f075d006Qi60"
+        DeleteOnTermination: true
+      ImageId: "ami-01ec84b284795cbc7"
+      InstanceType: "t3.medium"
+      Monitoring: false
+      Tags:
+      - Value: "NginxTest2"
+        Key: "Name"
+      InstanceInitiatedShutdownBehavior: "stop"
+      CpuOptions:
+        ThreadsPerCore: 2
+        CoreCount: 1
+      AvailabilityZone: "eu-west-2a"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsARecord: true
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      SecurityGroupIds:
+      - "sg-0edb4cdd9a4bcb1b9"
+      DisableApiTermination: false
+      KeyName: "goserver"
+      SourceDestCheck: true
+      PlacementGroupName: ""
+      VpcId: "vpc-0f87d77326035aa80"
+      State:
+        Code: "80"
+        Name: "stopped"
+      CreditSpecification:
+        CPUCredits: "unlimited"
+  EC2Volume00vol0dcc21aa53b09552300ZeReD:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Volume"
+    DeletionPolicy: "Retain"
+    Properties:
+      MultiAttachEnabled: false
+      SnapshotId: "snap-06ee67e2e3bd10fb9"
+      VolumeType: "gp3"
+      Encrypted: false
+      Size: 8
+      AutoEnableIO: true
+      AvailabilityZone: "eu-west-2a"
+      Throughput: 125
+      Iops: 3000
+      Tags: []
+  EC2Subnet00subnet0ee7ff7f6f8a23c2000NrBtf:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Subnet"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0ba95e8ae8327e13200F931z"
+      MapPublicIpOnLaunch: false
+      EnableDns64: false
+      AvailabilityZoneId: "euw2-az2"
+      PrivateDnsNameOptionsOnLaunch:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      CidrBlock: "10.0.0.0/20"
+      Ipv6Native: false
+      Tags:
+      - Value: "project-subnet-public1-eu-west-2a"
+        Key: "Name"
+  EC2VPC00vpc0f87d77326035aa8000ZzqXs:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::VPC"
+    DeletionPolicy: "Retain"
+    Properties:
+      CidrBlock: "172.31.0.0/16"
+      EnableDnsSupport: true
+      InstanceTenancy: "default"
+      EnableDnsHostnames: true
+      Tags: []
+  EC2SecurityGroup00sg02d88036a9910df1e00RSXlK:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SecurityGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      GroupDescription: "backend-firewall created 2024-09-19T11:25:20.950Z"
+      GroupName: "backend-firewall"
+      VpcId:
+        Ref: "EC2VPC00vpc0ba95e8ae8327e13200F931z"
+      SecurityGroupIngress:
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        FromPort: 8080
+        ToPort: 8080
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        FromPort: 22
+        ToPort: 22
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        FromPort: 0
+        ToPort: 0
+      SecurityGroupEgress:
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "-1"
+        FromPort: -1
+        ToPort: -1
+  EC2Volume00vol0001872dd65c25c1f00uNh9a:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Volume"
+    DeletionPolicy: "Retain"
+    Properties:
+      MultiAttachEnabled: false
+      SnapshotId: "snap-06ee67e2e3bd10fb9"
+      VolumeType: "gp3"
+      Encrypted: false
+      Size: 8
+      AutoEnableIO: true
+      AvailabilityZone: "eu-west-2a"
+      Throughput: 125
+      Iops: 3000
+      Tags: []
+  EC2DHCPOptions00dopt08588673299bf22b400Wle66:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::DHCPOptions"
+    DeletionPolicy: "Retain"
+    Properties:
+      DomainName: "eu-west-2.compute.internal"
+      DomainNameServers:
+      - "AmazonProvidedDNS"
+      Tags: []
+  EC2Instance00i098c0dbb0eed52f2800J7b8X:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Instance"
+    DeletionPolicy: "Retain"
+    Properties:
+      Tenancy: "default"
+      SecurityGroups:
+      - "launch-wizard-19"
+      PrivateIpAddress: "172.31.31.84"
+      BlockDeviceMappings:
+      - Ebs:
+          SnapshotId: "snap-06ee67e2e3bd10fb9"
+          VolumeType: "gp3"
+          Iops: 3000
+          VolumeSize: 8
+          Encrypted: false
+          DeleteOnTermination: true
+        DeviceName: "/dev/sda1"
+      IamInstanceProfile:
+        Ref: "IAMInstanceProfile00EC2RoleTutor00cg3wA"
+      SubnetId:
+        Ref: "EC2Subnet00subnet04b2ce847150cf1d000PIBz3"
+      EbsOptimized: false
+      Volumes:
+      - VolumeId: "vol-0dcc21aa53b095523"
+        Device: "/dev/sda1"
+      NetworkInterfaces:
+      - PrivateIpAddresses:
+        - PrivateIpAddress: "172.31.31.84"
+          Primary: true
+        SecondaryPrivateIpAddressCount: 0
+        DeviceIndex: "0"
+        GroupSet:
+        - Ref: "EC2SecurityGroup00sg0479056251699d015004qaun"
+        Ipv6Addresses: []
+        SubnetId:
+          Ref: "EC2Subnet00subnet04b2ce847150cf1d000PIBz3"
+        AssociatePublicIpAddress: false
+        NetworkInterfaceId:
+          Ref: "EC2NetworkInterface00eni071a0640c2880392000rzFuy"
+        DeleteOnTermination: true
+      ImageId: "ami-01ec84b284795cbc7"
+      InstanceType: "t2.micro"
+      Monitoring: false
+      Tags:
+      - Value: "go-server-backend"
+        Key: "Name"
+      InstanceInitiatedShutdownBehavior: "stop"
+      CpuOptions:
+        ThreadsPerCore: 1
+        CoreCount: 1
+      AvailabilityZone: "eu-west-2a"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsARecord: true
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      SecurityGroupIds:
+      - "sg-0479056251699d015"
+      DisableApiTermination: false
+      KeyName: "goserver"
+      SourceDestCheck: true
+      PlacementGroupName: ""
+      VpcId: "vpc-0f87d77326035aa80"
+      State:
+        Code: "80"
+        Name: "stopped"
+      CreditSpecification:
+        CPUCredits: "standard"
+  EC2SecurityGroup00sg0edb4cdd9a4bcb1b900MH2Z7:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SecurityGroup"
+    DeletionPolicy: "Retain"
+    Properties:
+      GroupDescription: "launch-wizard-18 created 2024-09-17T11:53:47.642Z"
+      GroupName: "launch-wizard-18"
+      VpcId:
+        Ref: "EC2VPC00vpc0f87d77326035aa8000ZzqXs"
+      SecurityGroupIngress:
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        FromPort: 80
+        ToPort: 80
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        FromPort: 22
+        ToPort: 22
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "tcp"
+        FromPort: 443
+        ToPort: 443
+      SecurityGroupEgress:
+      - CidrIp: "0.0.0.0/0"
+        IpProtocol: "-1"
+        FromPort: -1
+        ToPort: -1
+  IAMRole00EC2RoleTutor0010lsO:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+      - "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
+      MaxSessionDuration: 3600
+      RoleName: "EC2RoleTutor"
+      Description: "Allows EC2 instances to call AWS services on your behalf."
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "ec2.amazonaws.com"
+  EC2NetworkInterface00eni0919ba529f8c1ce9a00rTWqM:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::NetworkInterface"
+    DeletionPolicy: "Retain"
+    Properties:
+      Description: ""
+      PrivateIpAddress: "10.0.27.67"
+      PrivateIpAddresses:
+      - PrivateIpAddress: "10.0.27.67"
+        Primary: true
+      SecondaryPrivateIpAddressCount: 0
+      Ipv6PrefixCount: 0
+      Ipv4Prefixes: []
+      Ipv4PrefixCount: 0
+      GroupSet:
+      - "sg-07d875c0a076ceeba"
+      Ipv6Prefixes: []
+      SubnetId:
+        Ref: "EC2Subnet00subnet05b3b838935e29eeb00KEFTl"
+      SourceDestCheck: true
+      InterfaceType: "interface"
+      Tags: []
+  EC2Instance00i066d3046adc3e86cd00mYf4e:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Instance"
+    DeletionPolicy: "Retain"
+    Properties:
+      Tenancy: "default"
+      SecurityGroups:
+      - "programming-agent-security-group"
+      PrivateIpAddress: "10.0.131.129"
+      BlockDeviceMappings:
+      - Ebs:
+          SnapshotId: "snap-06ee67e2e3bd10fb9"
+          VolumeType: "gp3"
+          Iops: 3000
+          VolumeSize: 8
+          Encrypted: false
+          DeleteOnTermination: true
+        DeviceName: "/dev/sda1"
+      IamInstanceProfile:
+        Ref: "IAMInstanceProfile00EC2RoleTutor00cg3wA"
+      SubnetId:
+        Ref: "EC2Subnet00subnet03c42d2d05c6c51cf00fbVSy"
+      EbsOptimized: true
+      Volumes:
+      - VolumeId: "vol-060badf54d80843be"
+        Device: "/dev/sda1"
+      NetworkInterfaces:
+      - PrivateIpAddresses:
+        - PrivateIpAddress: "10.0.131.129"
+          Primary: true
+        SecondaryPrivateIpAddressCount: 0
+        DeviceIndex: "0"
+        GroupSet:
+        - Ref: "EC2SecurityGroup00sg0ceaeb26b50099d4c00qx7L5"
+        Ipv6Addresses: []
+        SubnetId:
+          Ref: "EC2Subnet00subnet03c42d2d05c6c51cf00fbVSy"
+        AssociatePublicIpAddress: false
+        NetworkInterfaceId:
+          Ref: "EC2NetworkInterface00eni0f0869cc1d75c824a00qHkQw"
+        DeleteOnTermination: true
+      ImageId: "ami-01ec84b284795cbc7"
+      InstanceType: "t3.micro"
+      Monitoring: false
+      Tags:
+      - Value: "BackendTestStack2"
+        Key: "Name"
+      InstanceInitiatedShutdownBehavior: "stop"
+      CpuOptions:
+        ThreadsPerCore: 2
+        CoreCount: 1
+      AvailabilityZone: "eu-west-2a"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      SecurityGroupIds:
+      - "sg-0ceaeb26b50099d4c"
+      DisableApiTermination: false
+      KeyName: "goserver"
+      SourceDestCheck: true
+      PlacementGroupName: ""
+      VpcId: "vpc-0666c1efed747a434"
+      State:
+        Code: "80"
+        Name: "stopped"
+      CreditSpecification:
+        CPUCredits: "unlimited"
+  EC2RouteTable00rtb0a0817b176e5bab6c00okaSl:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::RouteTable"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0ba95e8ae8327e13200F931z"
+      Tags:
+      - Value: "project-rtb-private2-eu-west-2b"
+        Key: "Name"
+  EC2VPC00vpc0ba95e8ae8327e13200F931z:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::VPC"
+    DeletionPolicy: "Retain"
+    Properties:
+      CidrBlock: "10.0.0.0/16"
+      EnableDnsSupport: true
+      InstanceTenancy: "default"
+      EnableDnsHostnames: true
+      Tags:
+      - Value: "project-vpc"
+        Key: "Name"
+  EC2VPCEndpoint00vpce03ff16f9611b47dd700lJfhx:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::VPCEndpoint"
+    DeletionPolicy: "Retain"
+    Properties:
+      PrivateDnsEnabled: false
+      VpcId:
+        Ref: "EC2VPC00vpc0ba95e8ae8327e13200F931z"
+      RouteTableIds:
+      - Ref: "EC2RouteTable00rtb0eaf4e5430597855f00N5v0S"
+      - Ref: "EC2RouteTable00rtb0a0817b176e5bab6c00okaSl"
+      ServiceName: "com.amazonaws.eu-west-2.s3"
+      PolicyDocument:
+        Version: "2008-10-17"
+        Statement:
+        - Resource: "*"
+          Action: "*"
+          Effect: "Allow"
+          Principal: "*"
+      VpcEndpointType: "Gateway"
+      SecurityGroupIds: []
+      SubnetIds: []
+  EC2NetworkAcl00acl0005053310392f73c00fCTm2:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::NetworkAcl"
+    DeletionPolicy: "Retain"
+    Properties:
+      VpcId:
+        Ref: "EC2VPC00vpc0ba95e8ae8327e13200F931z"
+      Tags: []
+  EC2Instance00i030057e21713ff55b00WDnrm:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Instance"
+    DeletionPolicy: "Retain"
+    Properties:
+      Tenancy: "default"
+      SecurityGroups:
+      - "programming-agent-frontend-security-group"
+      PrivateIpAddress: "10.0.12.223"
+      BlockDeviceMappings:
+      - Ebs:
+          SnapshotId: "snap-06ee67e2e3bd10fb9"
+          VolumeType: "gp3"
+          Iops: 3000
+          VolumeSize: 8
+          Encrypted: false
+          DeleteOnTermination: true
+        DeviceName: "/dev/sda1"
+      IamInstanceProfile:
+        Ref: "IAMInstanceProfile00EC2RoleTutor00cg3wA"
+      SubnetId:
+        Ref: "EC2Subnet00subnet094c069ca18df1bcd00mMxZ0"
+      EbsOptimized: true
+      Volumes:
+      - VolumeId: "vol-0e8ddf12b71a4555d"
+        Device: "/dev/sda1"
+      NetworkInterfaces:
+      - PrivateIpAddresses:
+        - PrivateIpAddress: "10.0.12.223"
+          Primary: true
+        SecondaryPrivateIpAddressCount: 0
+        DeviceIndex: "0"
+        GroupSet:
+        - Ref: "EC2SecurityGroup00sg0af86b1f7e8ae7b7800IqBaT"
+        Ipv6Addresses: []
+        SubnetId:
+          Ref: "EC2Subnet00subnet094c069ca18df1bcd00mMxZ0"
+        AssociatePublicIpAddress: true
+        NetworkInterfaceId:
+          Ref: "EC2NetworkInterface00eni079b99eeb9bf07ebd00H0V8u"
+        DeleteOnTermination: true
+      ImageId: "ami-01ec84b284795cbc7"
+      InstanceType: "t3.medium"
+      Monitoring: false
+      Tags:
+      - Value: "FrontendTestStack"
+        Key: "Name"
+      InstanceInitiatedShutdownBehavior: "stop"
+      CpuOptions:
+        ThreadsPerCore: 2
+        CoreCount: 1
+      AvailabilityZone: "eu-west-2a"
+      PrivateDnsNameOptions:
+        EnableResourceNameDnsARecord: false
+        HostnameType: "ip-name"
+        EnableResourceNameDnsAAAARecord: false
+      SecurityGroupIds:
+      - "sg-0af86b1f7e8ae7b78"
+      DisableApiTermination: false
+      KeyName: "goserver"
+      SourceDestCheck: true
+      PlacementGroupName: ""
+      VpcId: "vpc-0666c1efed747a434"
+      State:
+        Code: "16"
+        Name: "running"
+      CreditSpecification:
+        CPUCredits: "unlimited"
+  EC2InternetGateway00igw0c2256cadbebea43f005vI3L:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::InternetGateway"
+    DeletionPolicy: "Retain"
+    Properties:
+      Tags:
+      - Value: "project-igw"
+        Key: "Name"
+  EC2Volume00vol060badf54d80843be007jrtD:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Volume"
+    DeletionPolicy: "Retain"
+    Properties:
+      MultiAttachEnabled: false
+      SnapshotId: "snap-06ee67e2e3bd10fb9"
+      VolumeType: "gp3"
+      Encrypted: false
+      Size: 8
+      AutoEnableIO: true
+      AvailabilityZone: "eu-west-2a"
+      Throughput: 125
+      Iops: 3000
+      Tags: []
+  EC2Route00rtb051a6f950a415dfb000NmwW0:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::Route"
+    DeletionPolicy: "Retain"
+    Properties:
+      RouteTableId:
+        Ref: "EC2RouteTable00rtb051a6f950a415dfb000UWzK4"
+      DestinationCidrBlock: "10.0.0.0/16"
+      GatewayId: "local"
+      VpcEndpointId: "local"
+  IAMRole00AWSCodeDeployTutor00HkAlr:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::IAM::Role"
+    DeletionPolicy: "Retain"
+    Properties:
+      Path: "/"
+      ManagedPolicyArns:
+      - "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole"
+      MaxSessionDuration: 3600
+      RoleName: "AWSCodeDeployTutor"
+      Description: "Allows CodeDeploy to call AWS services such as Auto Scaling on\
+        \ your behalf."
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+        - Action: "sts:AssumeRole"
+          Effect: "Allow"
+          Principal:
+            Service: "codedeploy.amazonaws.com"
+          Sid: ""
+  EC2VolumeAttachment00vol01a354bebad238439006J654:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::VolumeAttachment"
+    DeletionPolicy: "Retain"
+    Properties:
+      InstanceId: "i-04ef5fcfd113ae952"
+      VolumeId: "vol-01a354bebad238439"
+      Device: "/dev/sda1"
+  EC2SubnetNetworkAclAssociation00aclassoc0a14e4bbe1a59b47000o0Hdf:
+    UpdateReplacePolicy: "Retain"
+    Type: "AWS::EC2::SubnetNetworkAclAssociation"
+    DeletionPolicy: "Retain"
+    Properties:
+      NetworkAclId:
+        Ref: "EC2NetworkAcl00acl0005053310392f73c00fCTm2"
+      SubnetId:
+        Ref: "EC2Subnet00subnet04c0984657fe5ae8900cb9SN"
