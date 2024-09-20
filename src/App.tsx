@@ -4,7 +4,7 @@ import { DeepChat } from 'deep-chat-react';
 import axios from 'axios';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
-const backendBaseUrl: string = "http://api.internal.programming-agent.internal"
+const backendBaseUrl: string = "https://api.internal.programming-agent.internal"
 
 function App() {
   const history = [
