@@ -4,6 +4,8 @@ import { DeepChat } from 'deep-chat-react';
 import axios from 'axios';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 
+const backendBaseUrl: string = "http://api.internal.programming-agent.internal"
+
 function App() {
   const history = [
     { role: 'ai', text: "Describe the web application you'd like me to create!" },
@@ -60,7 +62,7 @@ function App() {
     <div className="App">
       <h1>Your Programming Agent</h1>
       <DeepChat
-        connect={{ url: process.env.REACT_APP_BACKEND_SERVER + '/api/message'}}
+        connect={{ url: backendBaseUrl + '/api/message'}}
         style={{ width: '90vw', height: '80vh', borderRadius: '10px' }}
         textInput={{ placeholder: { text: 'Type here...' } }}
         history={history}
@@ -76,7 +78,7 @@ function App() {
 
 async function makeResetRequest() {
   try {
-    const response = await axios.put(process.env.REACT_APP_BACKEND_SERVER + '/api/restart');
+    const response = await axios.put(backendBaseUrl + '/api/restart');
   } catch (error) {
     console.error('Error making the PUT request', error)
   }
