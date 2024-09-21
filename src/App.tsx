@@ -8,7 +8,7 @@ const backendBaseUrl: string = "https://api.stephencowley.com"
 
 function App() {
   const history = [
-    { role: 'ai', text: "Describe the web application you'd like me to create!" },
+    { role: 'ai', text: "Describe the web application you'd like me to create" },
   ];
 
   // AWS S3 bucket details
