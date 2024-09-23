@@ -1,12 +1,23 @@
 import React, {useEffect, useState} from 'react';
-import './App.css';
+
 import { DeepChat } from 'deep-chat-react';
 import axios from 'axios';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import Button from 'react-bootstrap/Button';
+import { ThemeProvider } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Image from 'react-bootstrap/Image';
+
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const backendBaseUrl: string = "https://api.stephencowley.com"
 
+
 function App() {
+  
   const history = [
     { role: 'ai', text: "Describe the web application you'd like me to create" },
   ];
@@ -60,18 +71,28 @@ function App() {
   }, [])
   return (
     <div className="App">
-      <h1>Your Programming Agent</h1>
-      <DeepChat
-        connect={{ url: backendBaseUrl + '/api/message'}}
-        style={{ width: '90vw', height: '80vh', borderRadius: '10px' }}
-        textInput={{ placeholder: { text: 'Type here...' } }}
-        history={history}
-      />
-      <div>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload to S3</button>
-      {uploadMessage && <p>{uploadMessage}</p>}
-      </div>
+      <Container>
+        <Row>
+          <h1>Your Programming Agent</h1>
+        </Row>
+        <Row>
+          <Col>
+            <DeepChat
+              connect={{ url: backendBaseUrl + '/api/message'}}
+              style={{ width: '60vw', height: '80vh', borderRadius: '5px' }}
+              textInput={{ placeholder: { text: 'Type here...' } }}
+              history={history}
+            />
+          </Col>
+          <Col>
+            <div>
+            <input type="file" onChange={handleFileChange} />
+            <Button onClick={handleUpload}>Upload to S3</Button>
+            {uploadMessage && <p>{uploadMessage}</p>}
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </div>
   );
 }
