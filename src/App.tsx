@@ -71,9 +71,10 @@ function App() {
     makeResetRequest()
   }, [])
   return (
-    <div className="App">
+    <div className="App" data-bs-theme="dark">
       <Container>
-        <Row>
+        <Row style={{height: '1vh'}}/>
+        <Row style={{height: '9vh'}}>
           <h1>Your Programming Agent</h1>
         </Row>
         <Row>
@@ -117,6 +118,9 @@ function App() {
             </div> */}
             <Dropzone />
           </Col>
+        </Row>
+        <Row style={{height: '10vh'}}>
+
         </Row>
       </Container>
     </div>
