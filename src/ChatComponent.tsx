@@ -7,15 +7,19 @@ const ChatComponent: React.FC = (backendBaseUrl) => {
     ];
 
     return (
+        <div style={{width: '100%', display: 'flex', boxSizing: 'border-box'}}>
         <DeepChat
               connect={{ url: backendBaseUrl + '/api/message'}}
               style={{
-                width: '60vw',
+                width: '100%',
                 height: '80vh',
                 borderRadius: '5px',
                 backgroundColor: '#292929',
                 border: 'unset',
-                boxShadow: '0 0 10px rgba(0, 0, 0, 0.9)'
+                boxShadow: '0 0 8px rgba(0, 0, 0, 0.9)',
+                maxWidth: '100%', // Ensure it takes full width
+                minWidth: '0',   // Reset any min-width constraints
+                // boxSizing: 'border-box'
               }}
               messageStyles={{
                 default: {
@@ -49,7 +53,7 @@ const ChatComponent: React.FC = (backendBaseUrl) => {
                       display: 'flex',
                       borderRadius: '25px',
                       padding: '0.3em',
-                      backgroundColor: '#0084FF',
+                      backgroundColor: '#848484',
                     }
                   },
                   svg: {
@@ -64,6 +68,7 @@ const ChatComponent: React.FC = (backendBaseUrl) => {
                 }
               }}
             />
+        </div>
     )
 }
 

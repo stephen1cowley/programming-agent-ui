@@ -71,25 +71,32 @@ function App() {
     <div className="App" data-bs-theme="dark" style={{
       backgroundColor: '#1c1c1c',
       color: '#e8e8e8',
+      // width: '100%',
+      // height: '100%',
+      // justifyContent: 'center',
+      // alignItems: 'center',
       }}>
-      <Container  style={{width: '100vw'}}>
+      <Container style={{
+          width: '100vw',
+          margin: 0,
+          
+        }}>
         <Row style={{
           height: '10vh',
+          width: '100%',
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center',}}>
+          alignItems: 'center',
+          }}
+          
+          >
           <h3>Your Programming Agent</h3>
         </Row>
         <Row style={{height: '80vh'}}>
-          <Col>
-            <ChatComponent />
+          <Col xs={8} s={8} md={8} lg={8}>
+            <ChatComponent/>
           </Col>
           <Col>
-            {/* <div>
-            <input type="file" onChange={handleFileChange} />
-            <Button onClick={handleUpload}>Upload to S3</Button>
-            {uploadMessage && <p>{uploadMessage}</p>}
-            </div> */}
             <Dropzone />
           </Col>
         </Row>

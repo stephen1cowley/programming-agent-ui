@@ -50,19 +50,19 @@ const Dropzone: React.FC = () => {
       alignItems: 'center',
       backgroundColor: '#292929',
       cursor: 'pointer',
-      boxShadow: '0 0 10px rgba(0, 0, 0, 0.9)'
+      boxShadow: '0 0 8px rgba(0, 0, 0, 0.9)'
     }}>
       
 
       <input {...getInputProps()} />
-      <div style={{ height: '80vh', overflowY: 'auto', padding: '10px' }}>
+      <div style={{ width: '100%', height: '80vh', overflowY: 'auto', padding: '10px' }}>
         
         <Container>
           <Col>
             {images.length ? images.map((image, idx) => (
               
               <Row className="d-flex align-items-center justify-content-center">
-                <Card style={{ width: '20vw', padding: '5px', cursor: 'auto' }} onClick={(e) => (e.stopPropagation())}>
+                <Card style={{ padding: '5px', cursor: 'auto' }} onClick={(e) => (e.stopPropagation())}>
                 
                 
                 
