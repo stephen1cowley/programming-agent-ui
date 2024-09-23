@@ -9,7 +9,7 @@ import Form from 'react-bootstrap/Form';
 import CloseButton from 'react-bootstrap/CloseButton';
 
 const Dropzone: React.FC = () => {
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<{name: string; dataUrl: string}[]>([]);
 
   const onDrop = (acceptedFiles: File[]) => {
     for (const file of acceptedFiles) {
@@ -17,12 +17,22 @@ const Dropzone: React.FC = () => {
       reader.onload = () => {
         setImages(prevList => [
           ...prevList,
-          reader.result as string
+          {
+            name: file.name,
+            dataUrl: reader.result as string
+          }
         ]);
       };
       reader.readAsDataURL(file);
     }
   };
+
+  const handleRemoveImage = (index: number) => {
+    const updatedImages = images.filter((_, idx) => idx !== index);
+
+    // Update the state with the new array of images
+    setImages(updatedImages);
+  }
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
@@ -38,45 +48,65 @@ const Dropzone: React.FC = () => {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      cursor: 'pointer',
-      backgroundColor: '#111'
+      backgroundColor: '#111',
+      cursor: 'pointer'
     }}>
+      
 
       <input {...getInputProps()} />
-      <div style={{ height: '70vh', overflowY: 'auto' }}>
+      <div style={{ height: '80vh', overflowY: 'auto', padding: '10px' }}>
+        
         <Container>
-          <Row>
+          <Col>
             {images.length ? images.map((image, idx) => (
-              <Col>
-                <Card style={{ width: '15rem', padding: '0px' }}>
-                  <Card.Body style={{ padding: '5px' }}>
+              
+              <Row className="d-flex align-items-center justify-content-center">
+                <Card style={{ width: '20vw', padding: '5px', cursor: 'auto' }} onClick={(e) => (e.stopPropagation())}>
+                
+                
+                
+                  <Card.Body style={{ padding: '1px' }}>
                     <Container>
                       <Row>
-                        <Col xs={3}>
+                        <Col xs={3} style={{padding: '0px'}}>
                           <div style={{ width: '50px', height: '50px' }}> {/* Fixed size for thumbnails */}
                             <Image
-                              src={image}
+                              src={image.dataUrl}
                               thumbnail
                               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />
                           </div>
                         </Col>
-                        <Col xs={7}>
-                          <p>Card titel</p>
+
+                        
+
+
+
+                        <Col style={{padding: '0px', overflow: 'auto'}}>
+                          <small>{image.name}</small>
                         </Col>
-                        <Col xs={1}>
-                          <CloseButton />
+
+                        <Col xs={2}>
+                        <CloseButton onClick={(e) => {
+                            e.stopPropagation();
+                            handleRemoveImage(idx);
+                          }}/>
+                        
                         </Col>
+
+                        
+                        
                       </Row>
                     </Container>
+                    
                   </Card.Body>
                 </Card>
-              </Col>
+              </Row>
             ))
               : (
-                <p>Drag & Drop an image here or click to upload</p>
+                <p style={{color: '#fff'}}>Drag & Drop an image here or click to upload</p>
               )}
-          </Row>
+          </Col>
         </Container>
       </div>
     </div>
