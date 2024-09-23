@@ -68,13 +68,19 @@ function App() {
     makeResetRequest()
   }, [])
   return (
-    <div className="App" data-bs-theme="dark">
-      <Container>
-        <Row style={{height: '1vh'}}/>
-        <Row style={{height: '9vh'}}>
-          <h1>Your Programming Agent</h1>
+    <div className="App" data-bs-theme="dark" style={{
+      backgroundColor: '#1c1c1c',
+      color: '#e8e8e8',
+      }}>
+      <Container  style={{width: '100vw'}}>
+        <Row style={{
+          height: '10vh',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',}}>
+          <h3>Your Programming Agent</h3>
         </Row>
-        <Row>
+        <Row style={{height: '80vh'}}>
           <Col>
             <ChatComponent />
           </Col>

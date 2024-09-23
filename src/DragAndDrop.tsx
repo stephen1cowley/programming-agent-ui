@@ -48,8 +48,9 @@ const Dropzone: React.FC = () => {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#111',
-      cursor: 'pointer'
+      backgroundColor: '#292929',
+      cursor: 'pointer',
+      boxShadow: '0 0 10px rgba(0, 0, 0, 0.9)'
     }}>
       
 

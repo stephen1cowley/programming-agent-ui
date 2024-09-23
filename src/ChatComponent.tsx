@@ -9,8 +9,35 @@ const ChatComponent: React.FC = (backendBaseUrl) => {
     return (
         <DeepChat
               connect={{ url: backendBaseUrl + '/api/message'}}
-              style={{ width: '60vw', height: '80vh', borderRadius: '5px' }}
-              textInput={{ placeholder: { text: 'Type here...' } }}
+              style={{
+                width: '60vw',
+                height: '80vh',
+                borderRadius: '5px',
+                backgroundColor: '#292929',
+                border: 'unset',
+                boxShadow: '0 0 10px rgba(0, 0, 0, 0.9)'
+              }}
+              messageStyles={{
+                default: {
+                    ai: {
+                        bubble: {
+                            backgroundColor: '#545454',
+                            color: 'white',
+                        }
+                    }
+                }
+              }}
+              textInput={{
+                placeholder: { text: 'Type here...' },
+                styles: {
+                    container: {
+                        backgroundColor: '#666666',
+                        border: 'unset',
+                        color: '#e8e8e8',
+                        
+                    }
+                }
+              }}
               history={history}
               submitButtonStyles={{
                 submit: {
@@ -22,7 +49,7 @@ const ChatComponent: React.FC = (backendBaseUrl) => {
                       display: 'flex',
                       borderRadius: '25px',
                       padding: '0.3em',
-                      backgroundColor: '#00c82a'
+                      backgroundColor: '#0084FF',
                     }
                   },
                   svg: {
