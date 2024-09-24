@@ -1,9 +1,12 @@
 import axios from "axios";
 
-const uploadFile = async (file: File, uploadUrl: string) => {
+interface imDelSchema {
+    fileName: string
+}
+
+export const uploadFile = async (file: File, uploadUrl: string) => {
     const formData = new FormData()
     formData.append("file", file)
-    console.log("Form Data:", formData.get("file"));
 
     try {
         const response = await axios.post(uploadUrl, formData, {
@@ -17,4 +20,16 @@ const uploadFile = async (file: File, uploadUrl: string) => {
     }
 }
 
-export default uploadFile
+export const deleteFile = async (fileName: string, uploadUrl: string) => {
+    const postData: imDelSchema = {
+        fileName: '/uploads' + fileName
+    }
+
+    try {
+        const response = await axios.post(uploadUrl, postData)
+        console.log("File deleted successfully", response);
+    } catch (error) {
+        console.error("Error deleting file", error);
+    }
+}
+

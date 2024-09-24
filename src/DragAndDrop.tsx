@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import CloseButton from 'react-bootstrap/CloseButton';
-import uploadFile from './ImageUploadClient'
+import { uploadFile, deleteFile } from './ImageUploadClient'
 
 interface DropzoneProps {
   backendBaseUrl: string
@@ -35,6 +35,7 @@ const Dropzone: React.FC<DropzoneProps> = ({ backendBaseUrl }) => {
   };
 
   const handleRemoveImage = (index: number) => {
+    deleteFile(images[index].name, backendBaseUrl + '/api/imdel')
     const updatedImages = images.filter((_, idx) => idx !== index);
 
     // Update the state with the new array of images
