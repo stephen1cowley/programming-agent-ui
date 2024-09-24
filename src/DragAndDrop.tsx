@@ -7,6 +7,30 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import CloseButton from 'react-bootstrap/CloseButton';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+
+
+const uploadFileToS3 = async (bucketName: string, key: string, file: File) => {
+  // Create S3 client
+  const s3Client = new S3Client({ region: 'eu-west-2' });
+
+  // Set upload parameters
+  const params = {
+    Body: file,
+    Bucket: bucketName,
+    Key: key,
+    ContentType: file.type
+  };
+
+  try {
+    // Upload file to S3
+    const command = new PutObjectCommand(params);
+    const response = await s3Client.send(command);
+    console.log("File uploaded successfully", response);
+  } catch (error) {
+    console.error("Error uploading file", error);
+  }
+};
 
 const Dropzone: React.FC = () => {
   const [images, setImages] = useState<{name: string; dataUrl: string}[]>([]);
@@ -24,6 +48,9 @@ const Dropzone: React.FC = () => {
         ]);
       };
       reader.readAsDataURL(file);
+
+      // Now upload to S3
+      uploadFileToS3('my-programming-agent-img-store', 'uploads/' + file.name, file)
     }
   };
 
@@ -60,12 +87,8 @@ const Dropzone: React.FC = () => {
         <Container>
           <Col>
             {images.length ? images.map((image, idx) => (
-              
               <Row className="d-flex align-items-center justify-content-center">
                 <Card style={{ padding: '5px', cursor: 'auto' }} onClick={(e) => (e.stopPropagation())}>
-                
-                
-                
                   <Card.Body style={{ padding: '1px' }}>
                     <Container>
                       <Row>
@@ -78,11 +101,6 @@ const Dropzone: React.FC = () => {
                             />
                           </div>
                         </Col>
-
-                        
-
-
-
                         <Col style={{padding: '0px', overflow: 'auto'}}>
                           <small>{image.name}</small>
                         </Col>
@@ -91,15 +109,10 @@ const Dropzone: React.FC = () => {
                         <CloseButton onClick={(e) => {
                             e.stopPropagation();
                             handleRemoveImage(idx);
-                          }}/>
-                        
+                          }}/>           
                         </Col>
-
-                        
-                        
                       </Row>
                     </Container>
-                    
                   </Card.Body>
                 </Card>
               </Row>
