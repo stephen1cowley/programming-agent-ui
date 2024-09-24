@@ -5,34 +5,14 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
 import CloseButton from 'react-bootstrap/CloseButton';
-import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import uploadFile from './ImageUploadClient'
 
+interface DropzoneProps {
+  backendBaseUrl: string
+}
 
-const uploadFileToS3 = async (bucketName: string, key: string, file: File) => {
-  // Create S3 client
-  const s3Client = new S3Client({ region: 'eu-west-2' });
-
-  // Set upload parameters
-  const params = {
-    Body: file,
-    Bucket: bucketName,
-    Key: key,
-    ContentType: file.type
-  };
-
-  try {
-    // Upload file to S3
-    const command = new PutObjectCommand(params);
-    const response = await s3Client.send(command);
-    console.log("File uploaded successfully", response);
-  } catch (error) {
-    console.error("Error uploading file", error);
-  }
-};
-
-const Dropzone: React.FC = () => {
+const Dropzone: React.FC<DropzoneProps> = ({ backendBaseUrl }) => {
   const [images, setImages] = useState<{name: string; dataUrl: string}[]>([]);
 
   const onDrop = (acceptedFiles: File[]) => {
@@ -50,7 +30,7 @@ const Dropzone: React.FC = () => {
       reader.readAsDataURL(file);
 
       // Now upload to S3
-      uploadFileToS3('my-programming-agent-img-store', 'uploads/' + file.name, file)
+      uploadFile(file, backendBaseUrl + '/api/upload')
     }
   };
 

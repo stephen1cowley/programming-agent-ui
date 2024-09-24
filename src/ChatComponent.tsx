@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { DeepChat } from 'deep-chat-react';
 
-const ChatComponent: React.FC = (backendBaseUrl) => {
+interface ChatComponentProps {
+  backendBaseUrl: string
+}
+
+const ChatComponent: React.FC<ChatComponentProps> = ({backendBaseUrl}) => {
     const history = [
         { role: 'ai', text: "Describe the web application you'd like me to create" },
     ];
