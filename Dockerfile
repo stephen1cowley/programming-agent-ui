@@ -1,5 +1,5 @@
 # Stage 1: Build the React app
-FROM node:18 AS build
+FROM node:18-alpine AS build
 
 WORKDIR /app
 
@@ -9,7 +9,11 @@ RUN npm install
 
 # Copy source code and build the app
 COPY . .
+RUN cd /app
 RUN npm run build
+
+# Debug: List files in /app
+RUN ls -la /app
 
 # Stage 2: Serve the React app using Nginx
 FROM nginx:alpine
