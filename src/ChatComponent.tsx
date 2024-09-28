@@ -9,6 +9,18 @@ const ChatComponent: React.FC = (backendBaseUrl) => {
     return (
         <div style={{width: '100%', display: 'flex', boxSizing: 'border-box'}}>
         <DeepChat
+              auxiliaryStyle="
+              ::-webkit-scrollbar {
+                width: 10px;
+                height: 10px;
+              }
+              ::-webkit-scrollbar-thumb {
+                background-color: #888;
+                border-radius: 5px;
+              }
+              ::-webkit-scrollbar-track {
+                background-color: #292929;
+              }"
               connect={{ url: backendBaseUrl + '/api/message'}}
               style={{
                 width: '100%',

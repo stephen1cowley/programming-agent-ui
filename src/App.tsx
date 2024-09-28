@@ -90,7 +90,7 @@ function App() {
           }}
           
           >
-          <h3>Your Programming Agent!!!</h3>
+          <h3>Your Programming Agent</h3>
         </Row>
         <Row style={{height: '80vh'}}>
           <Col xs={8} s={8} md={8} lg={8}>
