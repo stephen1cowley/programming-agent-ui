@@ -32,7 +32,7 @@ const ChatComponent: React.FC<ChatComponentProps> = ({backendBaseUrl}) => {
                 borderRadius: '5px',
                 backgroundColor: '#292929',
                 border: 'unset',
-                boxShadow: '0 0 8px rgba(0, 0, 0, 0.9)',
+                boxShadow: '0 0 12px rgba(0, 0, 0, 0.8)',
                 maxWidth: '100%', // Ensure it takes full width
                 minWidth: '0',   // Reset any min-width constraints
                 // boxSizing: 'border-box'

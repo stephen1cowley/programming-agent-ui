@@ -58,7 +58,7 @@ const Dropzone: React.FC<DropzoneProps> = ({ backendBaseUrl }) => {
       alignItems: 'center',
       backgroundColor: '#292929',
       cursor: 'pointer',
-      boxShadow: '0 0 8px rgba(0, 0, 0, 0.9)'
+      boxShadow: '0 0 12px rgba(0, 0, 0, 0.8)'
     }}>
       
 
