@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { DeepChat } from 'deep-chat-react';
 
 interface ChatComponentProps {
-  backendBaseUrl: string
+  backendBaseUrl: string,
+  userName: string
 }
 
-const ChatComponent: React.FC<ChatComponentProps> = ({backendBaseUrl}) => {
+const ChatComponent: React.FC<ChatComponentProps> = ({backendBaseUrl, userName}) => {
     const history = [
         { role: 'ai', text: "Describe the web application you'd like me to create" },
     ];
+
 
     return (
         <div style={{width: '100%', display: 'flex', boxSizing: 'border-box'}}>
@@ -25,7 +27,10 @@ const ChatComponent: React.FC<ChatComponentProps> = ({backendBaseUrl}) => {
               ::-webkit-scrollbar-track {
                 background-color: #292929;
               }"
-              connect={{ url: backendBaseUrl + '/api/message'}}
+              connect={{
+                url: backendBaseUrl + '/api/message',
+                headers: { 'username': userName },
+              }}
               style={{
                 width: '100%',
                 height: '80vh',

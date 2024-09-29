@@ -62,7 +62,7 @@ function App() {
                     </Row>
                     <Row style={{height: '80vh'}}>
                       <Col xs={8} s={8} md={8} lg={8}>
-                        <ChatComponent backendBaseUrl={backendBaseUrl} />
+                        <ChatComponent backendBaseUrl={backendBaseUrl} userName={user ? user.username : ""} />
                       </Col>
                       <Col>
                         <Dropzone backendBaseUrl={backendBaseUrl} />
