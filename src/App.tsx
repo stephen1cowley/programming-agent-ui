@@ -22,9 +22,15 @@ const backendBaseUrl: string = "https://api.stephencowley.com"
 Amplify.configure({ ...awsExports });
 
 function App() {
+  const [userName, setUserName] = useState<string>("")
+  
   useEffect(() => {
     makeResetRequest()
   }, [])
+
+  const handleResetClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    makeUserResetRequest(userName)
+  }
 
   return (
     <div className="App" data-bs-theme="dark" style={{
@@ -36,7 +42,14 @@ function App() {
       // alignItems: 'center',
       }}>
         <Authenticator>
-            {({ signOut, user }) => (
+            {({ signOut, user }) => {
+              useEffect(() => {
+                if (user) {
+                  setUserName(user.username);
+                }
+              }, [user])
+
+              return (
                 <div>
                     <Container style={{
                       width: '100vw',
@@ -69,13 +82,13 @@ function App() {
                       </Col>
                     </Row>
                     <Row style={{height: '10vh'}}>
-
+                      <Button onClick={handleResetClick}>Reset</Button>
                     </Row>
                   </Container>
                     
                     
                 </div>
-            )}
+            )}}
         </Authenticator>
     
     </div>
@@ -87,6 +100,21 @@ async function makeResetRequest() {
     const response = await axios.put(backendBaseUrl + '/api/restart');
   } catch (error) {
     console.error('Error making the PUT request', error)
+  }
+}
+
+async function makeUserResetRequest(userName: string) {
+  try {
+    const response = await axios.get(
+      backendBaseUrl + '/api/restart', 
+      {
+        headers: {
+          'username': userName // Replace 'your-username' with the actual username
+        }
+      }
+    )
+  } catch (error) {
+      console.error('Error making the GET request', error)
   }
 }
 
