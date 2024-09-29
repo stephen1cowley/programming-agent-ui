@@ -78,7 +78,11 @@ function App() {
                       </Col>
                     </Row>
                     <Row style={{height: '10vh'}}>
+                      <Col xs={6}>
+                      <Button onClick={() => window.open('https://' + user?.username + 'stephencowley.com', '_blank')}>Visit Your App!</Button>
                       <Button onClick={handleResetClick}>Reset</Button>
+                      </Col>
+                      
                     </Row>
                   </Container>
                     
