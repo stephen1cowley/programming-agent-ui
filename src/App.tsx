@@ -102,7 +102,7 @@ async function makeResetRequest() {
 async function makeUserResetRequest(userName: string) {
   try {
     const response = await axios.get(
-      backendBaseUrl + '/api/restart', 
+      backendBaseUrl + '/api/reset', 
       {
         headers: {
           'username': userName // Replace 'your-username' with the actual username
