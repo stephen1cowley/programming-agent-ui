@@ -43,11 +43,7 @@ function App() {
       }}>
         <Authenticator>
             {({ signOut, user }) => {
-              useEffect(() => {
-                if (user) {
-                  setUserName(user.username);
-                }
-              }, [user])
+              setUserName(user ? user.username: "")
 
               return (
                 <div>
