@@ -23,6 +23,7 @@ Amplify.configure({ ...awsExports });
 
 function App() {
   const [userName, setUserName] = useState<string>("")
+  const [key, setKey] = useState(0);
   
   useEffect(() => {
     makeResetRequest()
@@ -30,7 +31,14 @@ function App() {
 
   const handleResetClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     makeUserResetRequest(userName)
+    resetComponent()
   }
+
+  
+
+  const resetComponent = () => {
+    setKey(prevKey => prevKey + 1); // Change the key to force a remount
+  };
 
   return (
     <div className="App" data-bs-theme="dark" style={{
@@ -71,10 +79,10 @@ function App() {
                     </Row>
                     <Row style={{height: '80vh'}}>
                       <Col xs={8} s={8} md={8} lg={8}>
-                        <ChatComponent backendBaseUrl={backendBaseUrl} userName={user ? user.username : ""} />
+                        <ChatComponent key={key} backendBaseUrl={backendBaseUrl} userName={user ? user.username : ""} />
                       </Col>
                       <Col>
-                        <Dropzone backendBaseUrl={backendBaseUrl} userName={user ? user.username : ""} />
+                        <Dropzone key={key} backendBaseUrl={backendBaseUrl} userName={user ? user.username : ""} />
                       </Col>
                     </Row>
                     <Row className="mt-3">
