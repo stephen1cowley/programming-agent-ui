@@ -78,7 +78,7 @@ function App() {
                         <ChatComponent backendBaseUrl={backendBaseUrl} userName={user ? user.username : ""} />
                       </Col>
                       <Col>
-                        <Dropzone backendBaseUrl={backendBaseUrl} />
+                        <Dropzone backendBaseUrl={backendBaseUrl} userName={user ? user.username : ""} />
                       </Col>
                     </Row>
                     <Row style={{height: '10vh'}}>

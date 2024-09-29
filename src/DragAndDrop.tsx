@@ -9,10 +9,11 @@ import CloseButton from 'react-bootstrap/CloseButton';
 import { uploadFile, deleteFile } from './ImageUploadClient'
 
 interface DropzoneProps {
-  backendBaseUrl: string
+  backendBaseUrl: string,
+  userName: string
 }
 
-const Dropzone: React.FC<DropzoneProps> = ({ backendBaseUrl }) => {
+const Dropzone: React.FC<DropzoneProps> = ({ backendBaseUrl, userName }) => {
   const [images, setImages] = useState<{name: string; dataUrl: string}[]>([]);
 
   const onDrop = (acceptedFiles: File[]) => {
@@ -30,12 +31,12 @@ const Dropzone: React.FC<DropzoneProps> = ({ backendBaseUrl }) => {
       reader.readAsDataURL(file);
 
       // Now upload to S3
-      uploadFile(file, backendBaseUrl + '/api/upload')
+      uploadFile(file, backendBaseUrl + '/api/upload', userName)
     }
   };
 
   const handleRemoveImage = (index: number) => {
-    deleteFile(images[index].name, backendBaseUrl + '/api/imdel')
+    deleteFile(images[index].name, backendBaseUrl + '/api/imdel', userName)
     const updatedImages = images.filter((_, idx) => idx !== index);
 
     // Update the state with the new array of images
