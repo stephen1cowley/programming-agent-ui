@@ -22,7 +22,7 @@ export const uploadFile = async (file: File, uploadUrl: string) => {
 
 export const deleteFile = async (fileName: string, uploadUrl: string) => {
     const postData: imDelSchema = {
-        fileName: 'uploads/' + fileName
+        fileName: fileName
     }
 
     try {
