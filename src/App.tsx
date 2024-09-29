@@ -53,7 +53,7 @@ function App() {
                       
                     }}>
                     <Row style={{
-                      height: '10vh',
+                      height: '8vh',
                       width: '100%',
                       display: 'flex',
                       justifyContent: 'center',
@@ -77,9 +77,9 @@ function App() {
                         <Dropzone backendBaseUrl={backendBaseUrl} userName={user ? user.username : ""} />
                       </Col>
                     </Row>
-                    <Row style={{height: '10vh'}}>
+                    <Row className="mt-3">
                       <Col xs={6}>
-                      <Button onClick={() => window.open('https://' + user?.username + '.stephencowley.com', '_blank')}>Visit Your App!</Button>
+                      <Button className="me-2" onClick={() => window.open('https://' + user?.username + '.stephencowley.com', '_blank')}>Visit Your App!</Button>
                       <Button onClick={handleResetClick}>Reset</Button>
                       </Col>
                       
